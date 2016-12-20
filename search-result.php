@@ -180,7 +180,22 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		    <div class="pagination">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="#" class="previous"><span class="fa fa-arrow-left"></span></a>
+                            <a href="#" class="active-page">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#">5</a>
+                            <a href="#" class="next"><span class="fa fa-arrow-right"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 	</section>
 </body>
 </html>
