@@ -142,6 +142,7 @@ input, select {
 }
 #banner input{
     height: 50px;
+
 }
 #search-header input{
     height: 40px;
@@ -162,12 +163,24 @@ input, select {
 #banner input[type='submit']{
     font-size: 156.25%;
 }
-#banner input[type='submit'],#search-header input[type='submit']{
+#banner input[type='submit']{
     background: #df6d19;
     border:none;
     border-radius: 0px;
     color:#ffffff;
     font-family: hindRegular;
+}
+#search-header input[type='submit']{
+    background: #ffffff;
+    border:none;
+    border-radius: 0px;
+    color:#df6d19;
+    font-family: montserratRegular;
+}
+#search-header input[type='submit']:hover{
+    background: #df6d19;
+    color:#ffffff;
+    transition: .3s all;
 }
 #search-header{
     padding: 20px 0;
@@ -210,7 +223,6 @@ input, select {
     border: 1px solid transparent;   
     text-decoration: none;
     transition: .3s all ease-in;
-    
 }
 .search-content .food-button{
     background: #ffffff;
@@ -250,4 +262,71 @@ input, select {
     background: #ffff;
     border-color: #df6d19;
     border-radius: 5px;
+}
+/*LIVE SEARCH*/
+.typeahead, .tt-query, .tt-hint {
+    border: 2px solid #CCCCCC;
+    border-radius: 8px;
+    font-size: 24px;
+    height: 30px;
+    line-height: 30px;
+    outline: medium none;
+    padding: 8px 12px;
+    width: 100%;
+}
+.typeahead {
+    background-color: #FFFFFF;
+}
+.typeahead:focus {
+    border: 2px solid #0097CF;
+}
+.tt-query {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.tt-hint {
+    color: #999999;
+    padding-right: 10px;
+}
+.tt-dropdown-menu {
+    background-color: transparent;
+    border: 1px dotted #df6d19;
+    margin-top: 12px;
+    width: 100%;
+}
+#banner .tt-suggestion {
+    font-size: 80%;
+    line-height: 24px;
+    text-align: left;
+    margin: 0px;
+    height: 50px;
+    padding: 10px 0px 10px 10px;
+    vertical-align: middle;
+}
+#search-header .tt-suggestion {
+    font-size: 120%;
+    line-height: 24px;
+    text-align: left;
+    margin: 0px;
+    height: 50px;
+    padding: 10px 0px 10px 10px;
+    color:#ffffff;
+}
+#banner .tt-suggestion.tt-is-under-cursor{
+    background-color: rgba(0,0,0,.8);
+    color:#ffffff;
+}
+
+#search-header .tt-dropdown-menu {
+    background-color: #df6d19;;
+    margin-top: 12px;
+    width: 100%;
+}
+#search-header .tt-suggestion.tt-is-under-cursor{
+    background-color: #ffffff;
+    color:#df6d19;
+    transition: .5s all;
+}
+
+.tt-suggestion p {
+    margin: 0;
 }

@@ -2,6 +2,8 @@
 <html>
 <head>
 	<?php include('section--links.php'); ?>
+    <script src="js/typeahead.min.js"></script>
+	<script src="js/live-search.js"></script>
 	<title>Home</title>
 </head>
 <body>
@@ -9,9 +11,9 @@
 		<div class="container">
 			<form>
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="form-group">
-			    			<input type="text" class="form-control" placeholder="I feel...">
+			    			<input type="text"  name="emotion" class="form-control typeahead tt-query" autocomplete="off" spellcheck="false" placeholder="I feel...">
 				  		</div>
 					</div>
 					<div class="col-md-2">
