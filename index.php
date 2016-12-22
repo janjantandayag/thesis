@@ -13,11 +13,11 @@
 				<h1>Hi, how are you today?</h1>
 				<p>Enter what you feel and we will help you find nearest place to eat.</p>
 			</div>
-			<form>
+			<form action="result.php" method="GET">
 				<div class="row">
 					<div class="col-md-3 col-md-offset-3">
 				  		<div class="form-group">
-			    			<input type="text" name="emotion" class="form-control typeahead tt-query" autocomplete="off" spellcheck="false" placeholder="I feel...">
+			    			<input type="text" required name="emotion" class="form-control typeahead tt-query" autocomplete="off" spellcheck="false" placeholder="I feel...">
 				  		</div>
 				  	</div>
 				  	<div class="col-md-2">
@@ -29,5 +29,9 @@
 			</form>
 		</div>
 	</section>
+
+	<script>
+
+	</script>
 </body>
 </html>
