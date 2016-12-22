@@ -73,7 +73,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<a href="#" class="button--showmap">Show Map</a>
+								<a href="#map" class="button--showmap">Show Map</a>
 							</div>
 						</div>	
 					</div>					
@@ -119,5 +119,16 @@
 			</div>
 		</div>
 	</section>
+<script>
+	function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: new google.maps.LatLng(8.9475, 125.5406),
+      zoom: 15
+    });		
+}
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9kKz7oqKE_kvxHAbuW3-32O6Uv9MHBPs&callback=initMap">
+</script>
 </body>
 </html>

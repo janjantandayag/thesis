@@ -1,3 +1,8 @@
+<?php
+	include('connection.php');
+
+	$emotionName = $_GET['emotion'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +18,7 @@
 			<div class="search-label">
 				<div class="row">
 					<div class="col-md-12">
-						<p>Showing result for: <span>sad</span></p>
+						<p>Showing result for: <span><?= $emotionName ?></span></p>
 					</div>
 				</div>
 			</div>
