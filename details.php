@@ -45,11 +45,18 @@
 		</div>
 		<div class="location-available">
 			<div class="container">
+				<?php
+					$queryLocation = mysqli_query($conn, "SELECT * from food, food_location, location WHERE food.food_id = $foodId AND food.food_id = food_location.food_id AND food_location.location_id = location.location_id");
+					$numOfLocation = mysqli_num_rows($queryLocation);
+				?>
 				<div class="row">
-					<?php
-						$queryLocation = mysqli_query($conn, "SELECT * from food, food_location, location WHERE food.food_id = $foodId AND food.food_id = food_location.food_id AND food_location.location_id = location.location_id");
-						while($location = mysqli_fetch_assoc($queryLocation)){
-					?>
+					<div class="col-md-12">
+						<p class="location-num"><span class="num"><?= $numOfLocation ?></span> locations found<p>
+					</div>
+				</div>
+				<div class="row">
+				<?php 
+					while($location = mysqli_fetch_assoc($queryLocation)){ ?>
                     <div class="col-md-6 location-border">
 						<div class="col-md-6">
 							<img src="display-location.php?imgId=<?= $location['location_id'] ?>" width="100%" />
@@ -84,7 +91,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<a href="#" class="button--showmap">Show Map</a>
+								<a href="#map" onclick="displayMap(<?= $location['lat'] ?>, <?= $location['lang'] ?> )" class="button--showmap">Show Map</a>
 							</div>
 						</div>	
 					</div>
@@ -97,11 +104,30 @@
 
 <script>
 	function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: new google.maps.LatLng(8.9475, 125.5406),
-      zoom: 15
-    });		
-}
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(8.9475, 125.5406),
+          zoom: 15
+        });		
+    }
+    
+    function displayMap(latitude, langhitude) {
+        var latitude;
+        var langhitude;
+        var point = new google.maps.LatLng(
+                  parseFloat(latitude),
+                  parseFloat(langhitude)
+              );   
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(latitude, langhitude),
+          zoom: 16
+        });
+
+        var marker = new google.maps.Marker({
+          map: map,
+          position: point,
+        });
+    }
 </script>
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9kKz7oqKE_kvxHAbuW3-32O6Uv9MHBPs&callback=initMap">

@@ -418,3 +418,14 @@ p.location-desc{
     background: #f9f6f4;
     border-left:5px dotted #df6d19;
 }
+
+p.location-num{
+    border-bottom: 1px dotted #df6d19;
+    margin-bottom: 50px;
+    font-size:100%;    
+    font-style: italic;
+    color:grey;
+}
+.location-num span{
+    font-size: 150%;
+}
