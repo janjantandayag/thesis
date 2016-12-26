@@ -1,6 +1,6 @@
 <section id="search-header">
 	<div class="container">
-		<form>
+		<form method="GET" action="result.php">
 			<div class="row">
 				<div class="col-md-3">
 					<div class="form-group">
