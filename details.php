@@ -103,12 +103,68 @@
 
 
 <script>
-	function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: new google.maps.LatLng(8.9475, 125.5406),
-          zoom: 15
-        });		
-    }
+	function initMap(){
+	    var map = new google.maps.Map(document.getElementById('map'), {
+	      center: new google.maps.LatLng(8.9475, 125.5406),
+	      zoom: 15,
+	      styles: [
+			  {
+			    "featureType": "road.local",
+			    "elementType": "labels.text.fill",
+			    "stylers": [
+			      {
+			        "color": "#333301"
+			      }
+			    ]
+			  }
+			]
+	    });
+
+	    var infoWindow = new google.maps.InfoWindow;
+	      downloadUrl('xml.php', function(data) {
+	        var xml = data.responseXML;
+	        var markers = xml.documentElement.getElementsByTagName('marker');
+	        Array.prototype.forEach.call(markers, function(markerElem) {
+	          var name = markerElem.getAttribute('name');
+	          var point = new google.maps.LatLng(
+	              parseFloat(markerElem.getAttribute('lat')),
+	              parseFloat(markerElem.getAttribute('lng'))
+	          );
+
+	          var infowincontent = document.createElement('div');
+	          var strong = document.createElement('strong');
+	          strong.textContent = name;
+	          infowincontent.appendChild(strong);
+
+	          var marker = new google.maps.Marker({
+	            map: map,
+	            position: point,
+	          });
+	          marker.addListener('click', function() {
+	            infoWindow.setContent(infowincontent);
+	            infoWindow.open(map, marker);
+	          });
+	        });
+	      });
+	    }
+
+
+	function downloadUrl(url, callback) {
+	    var request = window.ActiveXObject ?
+	        new ActiveXObject('Microsoft.XMLHTTP') :
+	        new XMLHttpRequest;
+
+	    request.onreadystatechange = function() {
+	      if (request.readyState == 4) {
+	        request.onreadystatechange = doNothing;
+	        callback(request, request.status);
+	      }
+	    };
+	    request.open('GET', url, true);
+	    request.send(null);
+	 }
+
+  	function doNothing() {}
     
     function displayMap(latitude, langhitude) {
         var latitude;
@@ -119,7 +175,7 @@
               );   
 
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: new google.maps.LatLng(latitude, langhitude),
+          center: point,
           zoom: 16
         });
 
