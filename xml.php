@@ -1,6 +1,6 @@
 <?php
 include("connection.php");
-$foodId = 1;
+$foodId = $_GET['food_id'];
 
 function parseToXML($htmlStr)
 {

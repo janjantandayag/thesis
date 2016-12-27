@@ -121,7 +121,7 @@
 	    });
 
 	    var infoWindow = new google.maps.InfoWindow;
-	      downloadUrl('xml.php', function(data) {
+	      downloadUrl('xml.php?food_id='+<?= $foodId ?>, function(data) {
 	        var xml = data.responseXML;
 	        var markers = xml.documentElement.getElementsByTagName('marker');
 	        Array.prototype.forEach.call(markers, function(markerElem) {
