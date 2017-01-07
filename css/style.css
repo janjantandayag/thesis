@@ -371,11 +371,9 @@ input, select {
     top: 12px;
     margin-left:300px;
 }
-#map-container #map{
-    height: 500px;
-}
-#map-container .container-fluid{
-    padding: 0;
+#map{
+    width: 100%;
+    min-height: 100vh;
 }
 .location-available{
     padding: 10px 0;
@@ -428,4 +426,8 @@ p.location-num{
 }
 .location-num span{
     font-size: 150%;
+}
+.modal-dialog{
+    width: 90%;
+    overflow: hidden;
 }
