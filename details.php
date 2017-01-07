@@ -106,7 +106,7 @@
 	function initMap(){
 	    var map = new google.maps.Map(document.getElementById('map'), {
 	      center: new google.maps.LatLng(8.9475, 125.5406),
-	      zoom: 15,
+	      zoom: 13,
 	      styles: [
 			  {
 			    "featureType": "road.local",
@@ -140,9 +140,8 @@
 	            map: map,
 	            position: point,
 	          });
+
 	          marker.addListener('click', function() {
-	            infoWindow.setContent(infowincontent);
-	            infoWindow.open(map, marker);
 	            map.setZoom(20);
                 map.setCenter(marker.getPosition());
 	          });
