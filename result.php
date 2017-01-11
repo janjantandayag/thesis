@@ -24,7 +24,7 @@
 			<div class="search-content">
 				<div class="row">
 					<?php
-						$query = mysqli_query($conn, "SELECT * from emotion, emotion_food,food WHERE emotion.emotion_name LIKE '%$emotionName%' AND emotion.emotion_id = emotion_food.emotion_id AND emotion_food.food_id = food.food_id");
+						$query = mysqli_query($conn, "SELECT * from emotion, attribute_emotion,attribute, attribute_food, food WHERE emotion.emotion_name LIKE '%$emotionName%' AND emotion.emotion_id = attribute_emotion.emotion_id AND attribute_emotion.attribute_id = attribute.attribute_id AND attribute.attribute_id = attribute_food.attribute_id AND attribute_food.food_id = food.food_id");
     					
     					while($row = mysqli_fetch_assoc($query)) {
 
