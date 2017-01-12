@@ -1,0 +1,9 @@
+#page-wrapper{
+    min-height: 700px;
+}
+#add-form{
+    padding: 50px;
+    -webkit-box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
+    -moz-box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
+    box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
+}
