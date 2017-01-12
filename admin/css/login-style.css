@@ -1,0 +1,159 @@
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+/*END CSS RESET */
+
+
+@font-face {font-family: hindBold;src: url(../fonts2/Hind-Bold.ttf);}
+@font-face {font-family: hindLight;src: url(../fonts2/Hind-Light.ttf);}
+@font-face {font-family: hindMedium;src: url(../fonts2/Hind-Medium.ttf);}
+@font-face {font-family: hindRegular;src: url(../fonts2/Hind-Regular.ttf);}
+@font-face {font-family: hindSemiBold;src: url(../fonts2/Hind-Semibold.ttf);}
+@font-face {font-family: montserratBold;src: url(../fonts2/Montserrat-Bold.ttf);}
+@font-face {font-family: montserratRegular;src: url(../fonts2/Montserrat-Regular.ttf);}
+@font-face {font-family: gudeaBold;src: url(../fonts2/Gudea-Bold.ttf);}
+@font-face {font-family: gudeaItalic;src: url(../fonts2/Gudea-Italic.ttf);}
+@font-face {font-family: gudeaRegular;src: url(../fonts2/Gudea-Regular.ttf);}
+
+/*style*/
+body{
+	background: #f0770b;
+}
+.wrapper{
+	max-width: 100%;
+	width: 500px;
+	margin: 0 auto;
+	padding:50px;
+}
+.wrapper  form{
+	padding: 50px;
+	border: 1px solid #df6d19;
+	text-align: center;
+	border-radius: 5px;
+	background:#fff;
+}
+.wrapper input[type='text'],
+.wrapper input[type='password']{
+	display: block;
+	height: 40px;
+	width: 90%;
+	border:none;
+	border-bottom: 1px solid #df6d19;
+	margin-bottom:30px;
+	color:#927d7d;
+	font-size: 125%;
+	font-style: italic;
+	font-family: hindLight;
+	padding-left: 20px;
+}
+.header-container{
+	width: 100%;
+	margin: 0 auto;
+}
+.wrapper input[type='submit']{
+	border: none;
+	background: #df6d19;
+	text-transform: uppercase;
+	color:#fff;
+	padding: 15px 30px;
+	margin-top:50px;
+	font-weight: bold;
+	font-family: montserratBold;
+	font-size: 125%;
+
+}
+.wrapper input[type='submit']:hover{
+	cursor: pointer;
+}
