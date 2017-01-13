@@ -90,9 +90,12 @@
                         //CHECK IF EXISTING 
                         $queryEmotions = mysqli_query($conn, "SELECT * FROM emotion WHERE emotion.emotion_name LIKE '%$emotionName%'");
                         $exist = mysqli_num_rows($queryEmotions);
-                        if($exist){                            
-                            
+
+                        //IF EXIST
+                        if($exist){             
+                            echo 'already in the database';
                         }
+                        // NOT EXIST
                         else{
                             //INSERT TO EMOTION
                             $insertQuery = mysqli_query($conn, "INSERT INTO emotion(emotion_name) VALUE('$emotionName')");
