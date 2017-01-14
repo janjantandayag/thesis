@@ -1,3 +1,8 @@
+<?php
+    include('database/Function.php');
+    $db = new DatabaseFunction;
+    $foodAttributes = $db->getFoodAttributes();                          
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,7 +63,6 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <form role="form" id="add-form" action="add-emotion.php" method="POST">
@@ -68,15 +72,10 @@
                             </div>
                             <div class="form-group">
                                 <label>Food Attribute</label>
-                                <select class="form-control" multiple name="foodAttribute[]" required>
-                                    <?php                                                   
-                                        include('database/connection.php');
-                                        $queryAttribute = mysqli_query($conn, "SELECT * FROM attribute");                             
-                                        while($attribute = mysqli_fetch_assoc($queryAttribute)){
-                                    ?>                
-                                    <option value="<?php echo $attribute['attribute_id'] ?>" ><?php echo strtoupper($attribute['attribute_name']) ?></option>
-                                    
-                                    <?php } ?>
+                                <select class="form-control" multiple name="foodAttribute[]" required>  
+                                    <?php foreach($foodAttributes as $foodAttribute){ ?>
+                                    <option value="<?= $foodAttribute['attribute_id'] ?>"><?=strtoupper($foodAttribute['attribute_name']);?></option>  
+                                    <?php }   ?>                               
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-success">Add Emotion</button>
@@ -85,31 +84,8 @@
                 </div>
                 <?php
                     if($_POST){
-                        $attrList = $_POST['foodAttribute'];
-                        $emotionName = $_POST['emotionName'];
-                        //CHECK IF EXISTING 
-                        $queryEmotions = mysqli_query($conn, "SELECT * FROM emotion WHERE emotion.emotion_name LIKE '%$emotionName%'");
-                        $exist = mysqli_num_rows($queryEmotions);
-
-                        //IF EXIST
-                        if($exist){             
-                            echo 'already in the database';
-                        }
-                        // NOT EXIST
-                        else{
-                            //INSERT TO EMOTION
-                            $insertQuery = mysqli_query($conn, "INSERT INTO emotion(emotion_name) VALUE('$emotionName')");
-                            //QUERY LAST ROW
-                            $queryLast = mysqli_query($conn, "SELECT emotion_id FROM emotion ORDER BY emotion_id DESC LIMIT 1");
-                            while($result = mysqli_fetch_assoc($queryLast)){
-                                $lastId = $result['emotion_id'];
-                            }
-                            //INSERT TO EMOOTION_FOODATTRIBUTE
-                            foreach($attrList as $attrId){
-                                $insertQuery = mysqli_query($conn, "INSERT INTO attribute_emotion(emotion_id,attribute_id) VALUE($lastId, $attrId)");
-                            }
-                        }                         
-                    }                    
+                        $db->addNewAttribute($_POST['foodAttribute'], $_POST['emotionName']);
+                    }                          
                 ?>
                 <!-- /.row -->
             </div>
