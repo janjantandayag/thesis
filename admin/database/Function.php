@@ -19,7 +19,7 @@
 			    }
 		}
 
-		public function getFoodAttributes(){
+		public function getAllAttributes(){
 			$stmt = $this->conn->prepare("SELECT * FROM attribute"); 
 	 		$stmt->execute(); 
 	 		$result = $stmt->fetchAll();
@@ -56,6 +56,20 @@
 	 					  </script>";
 				}
 	 		} 
+    	}
+
+    	public function displayEmotions(){
+    		$stmt = $this->conn->prepare("SELECT DISTINCT(emotion.emotion_name), emotion.emotion_id FROM emotion, attribute_emotion, attribute WHERE emotion.emotion_id = attribute_emotion.emotion_id AND attribute_emotion.attribute_id= attribute.attribute_id"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
+    	}
+
+    	public function getAttributes($id){
+    		$stmt = $this->conn->prepare("SELECT * FROM attribute_emotion, attribute WHERE attribute_emotion.emotion_id = $id AND attribute_emotion.attribute_id= attribute.attribute_id"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
     	}
 	}
 

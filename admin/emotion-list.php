@@ -1,13 +1,12 @@
 <?php
     include('database/Function.php');
-    $db = new DatabaseFunction;
-    $foodAttributes = $db->getAllAttributes();                          
+    $db = new DatabaseFunction;                        
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Add Emotions</title>
+    <title>Emotions' List</title>
     <?php include('include/header.php') ?>
 </head>
 
@@ -67,35 +66,54 @@
                 </div>
                 <!-- /.row -->
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                        <form role="form" id="add-form" action="add-emotion.php" method="POST">
-                            <div class="form-group">
-                                <label>Emotion Name</label>
-                                <input class="form-control" placeholder="Enter emotion name" name="emotionName" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Food Attribute</label>
-                                <select class="form-control" multiple name="foodAttribute[]" required>  
-                                    <?php foreach($foodAttributes as $foodAttribute){ ?>
-                                    <option value="<?= $foodAttribute['attribute_id'] ?>"><?=strtoupper($foodAttribute['attribute_name']);?></option>  
-                                    <?php }   ?>                               
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-success">Add Emotion</button>
-                        </form>
+                    <div class="col-md-12">
+                        <table class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Emotion Name</th>
+                                    <th>Food Attribute</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $emotions = $db->displayEmotions();
+                                    foreach($emotions as $emotion){
+                                ?>
+                                <tr>
+                                    <td><?= $emotion['emotion_name'];?></td>
+                                    <?php
+                                        //SEND emotion_id to get attributes 
+                                        $attributes = $db->getAttributes($emotion['emotion_id']); 
+                                    ?>
+                                    <td>
+                                    <?php
+                                        $i = 1; 
+                                        foreach($attributes as $attribute){
+                                            if($i == count($attributes)) { $comma = ' '; }
+                                            else{$comma = ', ';}                                            
+                                            $i++;
+                                            echo $attribute['attribute_name'].$comma; 
+                                        } 
+                                    ?>                                       
+                                    </td>
+                                    <td>
+                                        <a href="<?= $emotion['emotion_id']; ?>"><span class="fa fa-trash"></span> Delete</a> |
+                                        <a href="<?= $emotion['emotion_id']; ?>"><span class="fa fa-pencil-square"></span> Update</a>
+                                    </td>
+                                </tr>
+                                <?php
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <?php
-                    if($_POST){
-                        $db->addNewAttribute($_POST['foodAttribute'], $_POST['emotionName']);
-                    }                          
-                ?>
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 
