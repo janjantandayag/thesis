@@ -55,11 +55,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Add Emotion
+                            Emotion List
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-plus"></i> Add Emotion
+                                <i class="fa fa-list"></i> Emotion List
                             </li>
                         </ol>
                     </div>
