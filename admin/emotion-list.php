@@ -81,7 +81,7 @@
                                     foreach($emotions as $emotion){
                                 ?>
                                 <tr>
-                                    <td><?= $emotion['emotion_name'];?></td>
+                                    <td><a href="emotion-food.php?emotionId=<?= $emotion['emotion_id'] ?>&emotionName=<?=$emotion['emotion_name'] ?>"><?= strtoupper($emotion['emotion_name']);?></a></td>
                                     <?php
                                         //SEND emotion_id to get attributes 
                                         $attributes = $db->getAttributes($emotion['emotion_id']);

@@ -27,7 +27,6 @@
 						$query = mysqli_query($conn, "SELECT DISTINCT(food.food_id),food.food_name, food.food_description from emotion, attribute_emotion,attribute, attribute_food, food WHERE emotion.emotion_name LIKE '%$emotionName%' AND emotion.emotion_id = attribute_emotion.emotion_id AND attribute_emotion.attribute_id = attribute.attribute_id AND attribute.attribute_id = attribute_food.attribute_id AND attribute_food.food_id = food.food_id");
     					
     					while($row = mysqli_fetch_assoc($query)) {
-
 					?>
 					<div class="col-md-6">
 						<div class="row">

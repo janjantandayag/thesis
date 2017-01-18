@@ -5,7 +5,21 @@
         $emotionName = $_GET['emotionName'];
 
         include('database/Function.php');
-        $db = new DatabaseFunction;                        
+        $db = new DatabaseFunction;    
+        $foods = $db->emotionFood($emotionId);                  
+        /*
+        1. pass id to function1;
+        2. pass food_id to display image;
+
+
+        */
+
+        // SELECT DISTINCT(food.food_id),food.food_name from emotion, attribute_emotion,attribute, attribute_food, food WHERE emotion.emotion_id = $id AND emotion.emotion_id = attribute_emotion.emotion_id AND attribute_emotion.attribute_id = attribute.attribute_id AND attribute.attribute_id = attribute_food.attribute_id AND attribute_food.food_id = food.food_id
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +74,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            <?= strtoupper($emotionName)  ?>
+                            <?= strtoupper($emotionName) ?>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -74,9 +88,15 @@
                 </div>
                 <!-- /.row -->
                 <div class="row">
-                    <div class="col-md-12">
-                        
+                    <?php
+                        foreach ($foods as $food) {
+                    ?>
+                    <div class="col-md-3" style="margin-top:30px">
+                        <img src="database/display-image.php?foodId=<?= $food['food_id']?>" width="100%" style="border-radius: 5px" />
+                        <h2 class="food-header" style="font-size: 130%;text-transform: uppercase;padding:5px;color:#000;border-left: 5px solid #000"><?= $food['food_name'] ?>                            
+                        </h2>
                     </div>
+                    <?php } ?>
                 </div>
                 <!-- /.row -->
             </div>

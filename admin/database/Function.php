@@ -80,6 +80,20 @@
     		return $comma;
     	}
 
+    	public function emotionFood($id){
+    		$stmt = $this->conn->prepare("SELECT DISTINCT(food.food_id),food.food_name from emotion, attribute_emotion,attribute, attribute_food, food WHERE emotion.emotion_id = $id AND emotion.emotion_id = attribute_emotion.emotion_id AND attribute_emotion.attribute_id = attribute.attribute_id AND attribute.attribute_id = attribute_food.attribute_id AND attribute_food.food_id = food.food_id"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
+    	}
+
+    	public function displayImage($foodId){
+    		$stmt = $this->conn->prepare("SELECT * from food WHERE food_id=$foodId"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+			header('Content-Type: image/jpeg');
+			return $result;
+		}
 	}
 
 
