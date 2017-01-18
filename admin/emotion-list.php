@@ -58,7 +58,7 @@
                             Emotion List
                         </h1>
                         <ol class="breadcrumb">
-                            <li class="active">
+                            <li  class="active">
                                 <i class="fa fa-list"></i> Emotion List
                             </li>
                         </ol>
@@ -80,7 +80,7 @@
                                     $emotions = $db->displayEmotions();
                                     foreach($emotions as $emotion){
                                 ?>
-                                <tr>
+                                <tr id="row-<?= $emotion['emotion_id']; ?>">
                                     <td><a href="emotion-food.php?emotionId=<?= $emotion['emotion_id'] ?>&emotionName=<?=$emotion['emotion_name'] ?>"><?= strtoupper($emotion['emotion_name']);?></a></td>
                                     <?php
                                         //SEND emotion_id to get attributes 
@@ -98,8 +98,8 @@
                                     ?>                                       
                                     </td>
                                     <td>
-                                        <a href="<?= $emotion['emotion_id']; ?>"><span class="fa fa-trash"></span> Delete</a> |
-                                        <a href="<?= $emotion['emotion_id']; ?>"><span class="fa fa-pencil-square"></span> Update</a>
+                                        <a href="#" onClick="return deleteEmotion(<?= $emotion['emotion_id'] ?>, '<?= strtoupper($emotion['emotion_name']) ?>' )"><span class="fa fa-trash"></span> Delete</a> |
+                                        <a href="emotion-update.php?emotionId=<?= $emotion['emotion_id']; ?>&emotionName=<?=$emotion['emotion_name'] ?>"><span class="fa fa-pencil-square"></span> Update</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -121,6 +121,23 @@
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        function deleteEmotion(id,emotionName){
+            if(confirm('Are you sure you want to delete '+emotionName+'?')){
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200){
+                        $("#row-"+id).fadeOut('slow');
+                    }
+                };
+                xmlhttp.open("GET", "database/deleteEmotion.php?id=" + id, true);
+                xmlhttp.send();
+            }
+            else{
+                return false;
+            }
+        }
+    </script>
 
 </body>
 
