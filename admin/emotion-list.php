@@ -85,7 +85,6 @@
                                     <?php
                                         //SEND emotion_id to get attributes 
                                         $attributes = $db->getAttributes($emotion['emotion_id']);
-
                                     ?>
                                     <td>
                                     <?php
