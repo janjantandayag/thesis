@@ -71,6 +71,15 @@
 	 		$result = $stmt->fetchAll();
 	 		return $result;
     	}
+
+    	public function hasComma($i,$attributes){
+    		if($i == count($attributes))
+    			$comma = ' ';
+    		else
+    			$comma = ', ';
+    		return $comma;
+    	}
+
 	}
 
 

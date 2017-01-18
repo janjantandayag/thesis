@@ -84,16 +84,17 @@
                                     <td><?= $emotion['emotion_name'];?></td>
                                     <?php
                                         //SEND emotion_id to get attributes 
-                                        $attributes = $db->getAttributes($emotion['emotion_id']); 
+                                        $attributes = $db->getAttributes($emotion['emotion_id']);
+
                                     ?>
                                     <td>
                                     <?php
-                                        $i = 1; 
+                                        $i = 1;
                                         foreach($attributes as $attribute){
-                                            if($i == count($attributes)) { $comma = ' '; }
-                                            else{$comma = ', ';}                                            
+                                            //COMMA GENERATOR
+                                            $comma = $db->hasComma($i, $attributes); 
+                                            echo $attribute['attribute_name'].$comma;  
                                             $i++;
-                                            echo $attribute['attribute_name'].$comma; 
                                         } 
                                     ?>                                       
                                     </td>
