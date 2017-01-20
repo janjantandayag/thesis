@@ -7,3 +7,14 @@
     -moz-box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
     box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
 }
+#updateAttribute-form{
+	-webkit-box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
+    -moz-box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
+    box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
+    padding:50px;
+}
+#removeAttribute{
+	-webkit-box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
+    -moz-box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
+    box-shadow: 12px 13px 5px 0px rgba(230,225,230,1);
+}
