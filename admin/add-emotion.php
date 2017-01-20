@@ -87,7 +87,7 @@
                 </div>
                 <?php
                     if($_POST){
-                        $db->addNewAttribute($_POST['foodAttribute'], $_POST['emotionName']);
+                        $db->addNewAttribute($_POST['foodAttribute'], $_POST['emotionName']);   
                     }                          
                 ?>
                 <!-- /.row -->

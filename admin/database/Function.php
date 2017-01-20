@@ -51,10 +51,10 @@
 				foreach ($attrListSelected as $attrId) {
 					$insertEmoAttrStmt = $this->conn->prepare("INSERT INTO attribute_emotion(emotion_id,attribute_id) VALUE($lastId, $attrId)");
 					$insertEmoAttrStmt->execute();
-					echo "<script>
-	 						alert('Successfully added!');
-	 					  </script>";
 				}
+				echo "<script>
+ 						alert('Successfully added!');
+ 					  </script>";
 	 		} 
     	}
 
@@ -81,7 +81,7 @@
     	}
 
     	public function emotionFood($id){
-    		$stmt = $this->conn->prepare("SELECT DISTINCT(food.food_id),food.food_name from emotion, attribute_emotion,attribute, attribute_food, food WHERE emotion.emotion_id = $id AND emotion.emotion_id = attribute_emotion.emotion_id AND attribute_emotion.attribute_id = attribute.attribute_id AND attribute.attribute_id = attribute_food.attribute_id AND attribute_food.food_id = food.food_id"); 
+    		$stmt = $this->conn->prepare("SELECT * FROM emotion, attribute_emotion,attribute, attribute_food, food WHERE emotion.emotion_id = $id AND emotion.emotion_id = attribute_emotion.emotion_id AND attribute_emotion.attribute_id = attribute.attribute_id AND attribute.attribute_id = attribute_food.attribute_id AND attribute_food.food_id = food.food_id GROUP BY food.food_id"); 
 	 		$stmt->execute(); 
 	 		$result = $stmt->fetchAll();
 	 		return $result;

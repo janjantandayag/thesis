@@ -92,14 +92,56 @@
                                         <?php
                                             $attributes = $db->getAttributes($emotionId);
                                             foreach($attributes as $attribute){?>
-                                        <tr>
+                                        <tr id="attribute-<?= $attribute['attribute_id']; ?>">
                                             <td><?= $attribute['attribute_name'] ?></td>
-                                            <td><a href="#" onClick="return deleteEmotionAttribute()">Remove <span class="fa fa-remove"></span></a></td>
+                                            <td><a href="javascript:void(0)" onClick="return deleteEmotionAttribute(<?= $emotionId ?>,<?= $attribute['attribute_id'] ?>, '<?= strtoupper($attribute['attribute_name']); ?>')">Remove <span class="fa fa-remove"></span></a></td>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
                                 </table>
-                                <input type="button" value="Select New"/ class="btn btn-success btn-xs"   />
+                                <input type="button" value="Select New" data-toggle="modal" onClick="showSelected([<?php 
+                                            $i = 1;
+                                            foreach($attributes as $attribute){
+                                                //COMMA GENERATOR
+                                                $comma = $db->hasComma($i, $attributes); 
+                                                echo $attribute['attribute_id'].$comma;  
+                                                $i++;
+                                            }
+
+                                 ?>]); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
+                                <!-- Modal -->
+                                <div id="myModal" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Select Attributes</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                  <div class="form-group">
+                                                    <select class="form-control" multiple>
+                                                    <?php
+                                                        $attributes = $db->getAllAttributes();
+                                                        foreach ($attributes as $attribute) {
+                                                    ?>
+                                                        <option style="display:block" id="selectAttribute<?= $attribute['attribute_id'] ?>" value="<?= $attribute['attribute_id']; ?>"><?= $attribute['attribute_name']; ?></option>
+                                                        ?>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    </select>
+                                                  </div>
+                                                  <button type="submit" class="btn btn-success">Add</button>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -108,7 +150,7 @@
                             $foods = $db->emotionFood($emotionId); 
                             foreach($foods as $food){
                         ?>
-                        <div class="col-md-6">
+                        <div class="col-md-6 foodAttribute-<?= $food['attribute_id'] ?>">
                             <img src="database/display-image.php?foodId=<?= $food['food_id']?>" class="img-responsive" style="border-radius: 10px" />
                             <h5><?= strtoupper($food['food_name']) ?></h5>
                         </div>
@@ -128,6 +170,11 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script>
+        function showSelected(ids){
+            for(i=0;i<ids.length;i++){
+                document.getElementById('selectAttribute'+ids[i]).style.display = 'none';
+            }
+        }
         function updateEmotionName(id){
             if(confirm('Are you sure you want to update the name?')){
                 var newValue = document.getElementById('newValue').value.toUpperCase();
@@ -148,7 +195,7 @@
                         if (this.readyState == 4 && this.status == 200){                        
                             target.fadeOut('fast');
                             target.text(newValue); 
-                            target.hide().fadeIn('slow');
+                            target.fadeIn('slow');
                             prompt.text('Successfully updated!');
                             prompt.css({
                                 "color":"green",
@@ -161,6 +208,24 @@
                     xmlhttp.open("GET", "database/updateName.php?id=" + id+"&name="+ newValue, true);
                     xmlhttp.send();
                 }
+            }
+            else{
+                return false;
+            }
+        }
+
+        function deleteEmotionAttribute(emotionId,id, name){
+            if(confirm('Are you sure you want to remove '+name+'?')){
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200){  
+                            $('#attribute-'+id).hide('3000');
+                            $('.foodAttribute-'+id).hide('3000');
+                            document.getElementById('selectAttribute'+id).style.display = 'block';
+                            }
+                        };
+                xmlhttp.open("GET", "database/deleteAttribute.php?id=" + id + '&emotionId='+emotionId, true);
+                xmlhttp.send();
             }
             else{
                 return false;
