@@ -90,8 +90,8 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $attributes = $db->getAttributes($emotionId);
-                                            foreach($attributes as $attribute){?>
+                                            $selectedAttributes = $db->getAttributes($emotionId);
+                                            foreach($selectedAttributes as $attribute){?>
                                         <tr id="attribute-<?= $attribute['attribute_id']; ?>">
                                             <td><?= $attribute['attribute_name'] ?></td>
                                             <td><a href="javascript:void(0)" onClick="return deleteEmotionAttribute(<?= $emotionId ?>,<?= $attribute['attribute_id'] ?>, '<?= strtoupper($attribute['attribute_name']); ?>')">Remove <span class="fa fa-remove"></span></a></td>
@@ -99,16 +99,7 @@
                                         <?php } ?>
                                     </tbody>
                                 </table>
-                                <input type="button" value="Select New" data-toggle="modal" onClick="showSelected([<?php 
-                                            $i = 1;
-                                            foreach($attributes as $attribute){
-                                                //COMMA GENERATOR
-                                                $comma = $db->hasComma($i, $attributes); 
-                                                echo $attribute['attribute_id'].$comma;  
-                                                $i++;
-                                            }
-
-                                 ?>]); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
+                                <input type="button" value="Select New" data-toggle="modal" onClick="showSelected(); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
                                 <!-- Modal -->
                                 <div id="myModal" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
@@ -119,9 +110,9 @@
                                                 <h4 class="modal-title">Select Attributes</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <form>
+                                                <form method="POST" action="database/addNewAttributes.php">
                                                   <div class="form-group">
-                                                    <select class="form-control" multiple>
+                                                    <select class="form-control" multiple id="oldSelect" name="newAddSelect[]">
                                                     <?php
                                                         $attributes = $db->getAllAttributes();
                                                         foreach ($attributes as $attribute) {
@@ -132,8 +123,13 @@
                                                         }
                                                     ?>
                                                     </select>
+                                                    <select class="form-control" multiple id="newSelect" name="newAddSelect[]" style='display: none'>
+                                                    
+                                                    </select>
+                                                    <input type="hidden" name="emotionId" value="<?= $emotionId ?>">
+                                                    <input type="hidden" id="toChange" name="emotionName" value="<?= $emotionName ?>">
                                                   </div>
-                                                  <button type="submit" class="btn btn-success">Add</button>
+                                                  <button type="submit"  class="btn btn-success">Add</button>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
@@ -170,7 +166,17 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script>
-        function showSelected(ids){
+        function showSelected(){
+            var ids= [<?php 
+                $i = 1;
+                foreach($selectedAttributes as $attribute){
+                    //COMMA GENERATOR
+                    $comma = $db->hasComma($i, $attributes); 
+                    echo $attribute['attribute_id'].$comma;  
+                    $i++;
+                }
+             ?>];
+
             for(i=0;i<ids.length;i++){
                 document.getElementById('selectAttribute'+ids[i]).style.display = 'none';
             }
@@ -203,6 +209,7 @@
                             });
                             prompt.fadeIn('slow');
                             prompt.fadeOut('slow');
+                            document.getElementById('toChange').value = newValue;
                                 }
                             };
                     xmlhttp.open("GET", "database/updateName.php?id=" + id+"&name="+ newValue, true);
@@ -221,7 +228,9 @@
                     if (this.readyState == 4 && this.status == 200){  
                             $('#attribute-'+id).hide('3000');
                             $('.foodAttribute-'+id).hide('3000');
-                            document.getElementById('selectAttribute'+id).style.display = 'block';
+                            document.getElementById('oldSelect').style.display = 'none';
+                            document.getElementById('newSelect').style.display = 'block';
+                            document.getElementById("newSelect").innerHTML = this.responseText;
                             }
                         };
                 xmlhttp.open("GET", "database/deleteAttribute.php?id=" + id + '&emotionId='+emotionId, true);
