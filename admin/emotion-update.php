@@ -34,9 +34,6 @@
                             <li>
                                 <a href="add-emotion.php">Add Emotion</a>
                             </li>
-                            <li>
-                                <a href="#">Edit Emotion</a>
-                            </li>
                         </ul>
                     </li>
                     <li>

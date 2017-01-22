@@ -6,7 +6,7 @@
 <html lang="en">
 
 <head>
-    <title>Emotions' List</title>
+    <title>Attributes' List</title>
     <?php include('include/header.php') ?>
 </head>
 
@@ -21,7 +21,7 @@
                     <li>
                         <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <li  class="active">
+                    <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-smile-o"></i> Manage Emotion <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
@@ -29,6 +29,17 @@
                             </li>
                             <li>
                                 <a href="add-emotion.php">Add Emotion</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li  class="active">
+                        <a href="javascript:;" data-toggle="collapse" data-target="#attribute"><i class="fa fa-fw fa-list-alt"></i> Manage Attribute <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="attribute" class="collapse">
+                            <li>
+                                <a href="attribute-list.php">Attribute List</a>
+                            </li>
+                            <li>
+                                <a href="attribute-add.php">Add Attribute</a>
                             </li>
                         </ul>
                     </li>
@@ -52,11 +63,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Emotion List
+                            Attribute List
                         </h1>
                         <ol class="breadcrumb">
                             <li  class="active">
-                                <i class="fa fa-list"></i> Emotion List
+                                <i class="fa fa-list"></i> Attribute List
                             </li>
                         </ol>
                     </div>
@@ -67,36 +78,36 @@
                         <table class="table table-hover table-responsive">
                             <thead>
                                 <tr>
-                                    <th>Emotion Name</th>
-                                    <th>Food Attribute</th>
+                                    <th>Attribute Name</th>
+                                    <th>Food Related</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                    $emotions = $db->displayEmotions();
-                                    foreach($emotions as $emotion){
+                                    $attributes = $db->displayAttributes();
+                                    foreach($attributes as $attribute){
                                 ?>
-                                <tr id="row-<?= $emotion['emotion_id']; ?>">
-                                    <td><a href="emotion-food.php?emotionId=<?= $emotion['emotion_id'] ?>&emotionName=<?=$emotion['emotion_name'] ?>"><?= strtoupper($emotion['emotion_name']);?></a></td>
+                                <tr id="row-<?= $attribute['attribute_id']; ?>">
+                                    <td><a href="#"><?= strtoupper($attribute['attribute_name']);?></a></td>
                                     <?php
                                         //SEND emotion_id to get attributes 
-                                        $attributes = $db->getAttributes($emotion['emotion_id']);
+                                        $foods = $db->getFood($attribute['attribute_id']);
                                     ?>
                                     <td>
                                     <?php
                                         $i = 1;
-                                        foreach($attributes as $attribute){
+                                        foreach($foods as $food){
                                             //COMMA GENERATOR
-                                            $comma = $db->hasComma($i, $attributes); 
-                                            echo $attribute['attribute_name'].$comma;  
+                                            $comma = $db->hasComma($i, $foods); 
+                                            echo $food['food_name'].$comma;  
                                             $i++;
                                         } 
                                     ?>                                       
                                     </td>
                                     <td>
-                                        <a href="#" onClick="return deleteEmotion(<?= $emotion['emotion_id'] ?>, '<?= strtoupper($emotion['emotion_name']) ?>' )"><span class="fa fa-trash"></span> Delete</a> |
-                                        <a href="emotion-update.php?emotionId=<?= $emotion['emotion_id']; ?>&emotionName=<?=$emotion['emotion_name'] ?>"><span class="fa fa-pencil-square"></span> Update</a>
+                                        <a href="#" onClick="return deleteAttribute(<?= $attribute['attribute_id'] ?>, '<?= strtoupper($attribute['attribute_name']) ?>' )"><span class="fa fa-trash"></span> Delete</a> |
+                                        <a href="emotion-update.php?attributeId=<?= $attribute['attribute_id']; ?>&attributeName=<?=$attribute['attribute_name'] ?>"><span class="fa fa-pencil-square"></span> Update</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -107,6 +118,9 @@
                         <div class="alert alert-success" id="successful" style='display:none'>
                           <strong>Success!</strong> Successfully deleted.
                         </div>
+                        <!-- <div class="alert alert-danger" id="successful">
+                          <strong>Oops!</strong> Already in the database.
+                        </div> -->
                     </div>
                 </div>
                 <!-- /.row -->
@@ -122,8 +136,8 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script>
-        function deleteEmotion(id,emotionName){
-            if(confirm('Are you sure you want to delete '+emotionName+'?')){
+        function deleteAttribute(id,attributeName){
+            if(confirm('Are you sure you want to delete '+attributeName+'?')){
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200){
@@ -132,7 +146,7 @@
                         $("#successful").fadeOut(5000);
                     }
                 };
-                xmlhttp.open("GET", "database/deleteEmotion.php?id=" + id, true);
+                xmlhttp.open("GET", "database/deleteSpecificAttribute.php?id=" + id, true);
                 xmlhttp.send();
             }
             else{

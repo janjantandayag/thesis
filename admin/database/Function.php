@@ -54,6 +54,7 @@
 				}
 				echo "<script>
  						alert('Successfully added!');
+ 						window.location = 'emotion-list.php';
  					  </script>";
 	 		} 
     	}
@@ -94,6 +95,60 @@
 			header('Content-Type: image/jpeg');
 			return $result;
 		}
+
+		public function getAllFoods(){
+			$stmt = $this->conn->prepare("SELECT * FROM food"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
+		}
+
+		public function addNewFood($foodRelated, $attributeName){
+			//CHECK IF EXISTING
+			$stmt = $this->conn->prepare("SELECT * FROM attribute WHERE attribute.attribute_name LIKE '%$attributeName%'"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		//EXIST
+	 		if(count($result) > 0){
+	 			echo "<script>
+	 				alert('already in the db');
+	 			</script>";
+	 		}
+	 		//NOT EXIST
+	 		else{
+	 		//INSERT TO EMOTION
+				$insertStmt = $this->conn->prepare("INSERT INTO attribute(attribute_name) VALUE('$attributeName')"); 
+				$insertStmt->execute();
+				//QUERY LAST ROW
+				$lastRowStmt = $this->conn->prepare("SELECT attribute_id FROM attribute ORDER BY attribute_id DESC LIMIT 1");
+				$lastRowStmt->execute();
+				$result = $lastRowStmt->fetch();
+				$lastId = $result['attribute_id'];
+				//INSERT TO EMOOTION_FOODATTRIBUTE
+				foreach ($foodRelated as $foodId) {
+					$insertAttrFoodStmt = $this->conn->prepare("INSERT INTO attribute_food(attribute_id,food_id) VALUE($lastId, $foodId)");
+					$insertAttrFoodStmt->execute();
+				}
+				echo "<script>
+ 						alert('Successfully added!');
+ 						window.location = 'attribute-list.php';
+ 					  </script>";
+	 		} 
+		}
+
+		public function displayAttributes(){
+    		$stmt = $this->conn->prepare("SELECT DISTINCT(attribute.attribute_name), attribute.attribute_id FROM attribute, attribute_food, food WHERE attribute.attribute_id = attribute_food.attribute_id AND attribute_food.food_id= food.food_id"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
+    	}
+
+    	public function getFood($id){
+    		$stmt = $this->conn->prepare("SELECT * FROM attribute_food, food WHERE attribute_food.attribute_id = $id AND attribute_food.food_id= food.food_id"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
+    	}
 	}
 
 

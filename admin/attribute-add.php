@@ -1,13 +1,13 @@
 <?php
     include('database/Function.php');
     $db = new DatabaseFunction;
-    $foodAttributes = $db->getAllAttributes();                          
+    $foods = $db->getAllFoods();                          
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Add Emotions</title>
+    <title>Add Attribute</title>
     <?php include('include/header.php') ?>
 </head>
 
@@ -22,7 +22,7 @@
                     <li>
                         <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <li  class="active">
+                    <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-smile-o"></i> Manage Emotion <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
@@ -30,6 +30,17 @@
                             </li>
                             <li>
                                 <a href="add-emotion.php">Add Emotion</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li  class="active">
+                        <a href="javascript:;" data-toggle="collapse" data-target="#attribute"><i class="fa fa-fw fa-list-alt"></i> Manage Attribute <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="attribute" class="collapse">
+                            <li>
+                                <a href="attribute-list.php">Attribute List</a>
+                            </li>
+                            <li>
+                                <a href="attribute-add.php">Add Attribute</a>
                             </li>
                         </ul>
                     </li>
@@ -53,11 +64,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Add Emotion
+                            Add Attribute
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-plus"></i> Add Emotion
+                                <i class="fa fa-plus"></i> Add Attribute
                             </li>
                         </ol>
                     </div>
@@ -65,26 +76,26 @@
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <form role="form" id="add-form" action="add-emotion.php" method="POST">
+                        <form role="form" id="add-form" action="attribute-add.php" method="POST">
                             <div class="form-group">
-                                <label>Emotion Name</label>
-                                <input class="form-control" placeholder="Enter emotion name" name="emotionName" required>
+                                <label>Attribute Name</label>
+                                <input class="form-control" placeholder="Enter attribute name" name="attributeName" required>
                             </div>
                             <div class="form-group">
-                                <label>Food Attribute</label>
-                                <select class="form-control" multiple name="foodAttribute[]" required>  
-                                    <?php foreach($foodAttributes as $foodAttribute){ ?>
-                                    <option value="<?= $foodAttribute['attribute_id'] ?>"><?=strtoupper($foodAttribute['attribute_name']);?></option>  
+                                <label>Related Food</label>
+                                <select class="form-control" multiple name="foodRelated[]" required>  
+                                    <?php foreach($foods as $food){ ?>
+                                    <option value="<?= $food['food_id'] ?>"><?=strtoupper($food['food_name']);?></option>  
                                     <?php }   ?>                               
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-success">Add Emotion</button>
+                            <button type="submit" class="btn btn-success">Add Attribute</button>
                         </form>
                     </div>
                 </div>
                 <?php
                     if($_POST){
-                        $db->addNewAttribute($_POST['foodAttribute'], $_POST['emotionName']);   
+                        $db->addNewFood($_POST['foodRelated'], strtolower($_POST['attributeName']));   
                     }                          
                 ?>
                 <!-- /.row -->
