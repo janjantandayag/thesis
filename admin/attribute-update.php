@@ -98,9 +98,9 @@
                                 <?php
                                     $foodRelated = $db->getFood($attributeId);
                                     foreach($foodRelated as $food){?>
-                                <tr id="attribute-<?= $food['attribute_id']; ?>">
+                                <tr id="attribute-<?= $food['food_id']; ?>">
                                     <td><?= $food['food_name'] ?></td>
-                                    <td><a href="javascript:void(0)" onClick="return deleteAttributeFood(<?= $attributeId ?>,<?= $food['attribute_id'] ?>, '<?= strtoupper($food['food_name']); ?>')">Remove <span class="fa fa-remove"></span></a></td>
+                                    <td><a href="javascript:void(0)" onClick="return deleteAttributeFood(<?= $attributeId ?>,<?= $food['food_id'] ?>, '<?= strtoupper($food['food_name']); ?>')">Remove <span class="fa fa-remove"></span></a></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>
@@ -116,7 +116,7 @@
                                         <h4 class="modal-title">Select Attributes</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="POST" action="database/addNewAttributes.php">
+                                        <form method="POST" action="database/addNewFoods.php">
                                           <div class="form-group">
                                             <select class="form-control" multiple id="oldSelect" name="newAddSelect[]">
                                             <?php
@@ -132,8 +132,8 @@
                                             <select class="form-control" multiple id="newSelect" name="newAddSelect[]" style='display: none'>
                                             
                                             </select>
-                                            <input type="hidden" name="emotionId" value="<?= $emotionId ?>">
-                                            <input type="hidden" id="toChange" name="emotionName" value="<?= $emotionName ?>">
+                                            <input type="hidden" name="attributeId" value="<?= $attributeId ?>">
+                                            <input type="hidden" id="toChange" name="attributeName" value="<?= $attributeName ?>">
                                           </div>
                                           <button type="submit"  class="btn btn-success">Add</button>
                                         </form>
@@ -214,19 +214,19 @@
             }
         }
 
-        function deleteAttributeFood(emotionId,id, name){
-            if(confirm('Are you sure you want to remove '+name+'?')){
+        function deleteAttributeFood(attributeId,foodId, foodName){
+            if(confirm('Are you sure you want to remove '+foodName+'?')){
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200){  
-                            $('#attribute-'+id).hide('3000');
-                            $('.foodAttribute-'+id).hide('3000');
+                            $('#attribute-'+foodId).hide('3000');
+                            $('.foodAttribute-'+foodId).hide('3000');
                             document.getElementById('oldSelect').style.display = 'none';
                             document.getElementById('newSelect').style.display = 'block';
                             document.getElementById("newSelect").innerHTML = this.responseText;
                             }
                         };
-                xmlhttp.open("GET", "database/deleteAttribute.php?id=" + id + '&emotionId='+emotionId, true);
+                xmlhttp.open("GET", "database/deleteFood.php?attributeId=" + attributeId + '&foodId='+foodId, true);
                 xmlhttp.send();
             }
             else{
@@ -239,7 +239,7 @@
 </html>
 <?php }
     else{
-        header("Location: emotion-list.php");
+        header("Location: attribute-list.php");
     }
 ?>
 

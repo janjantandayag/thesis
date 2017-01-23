@@ -37,6 +37,17 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#attribute"><i class="fa fa-fw fa-list-alt"></i> Manage Attribute <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="attribute" class="collapse">
+                            <li>
+                                <a href="attribute-list.php">Attribute List</a>
+                            </li>
+                            <li>
+                                <a href="attribute-add.php">Add Attribute</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="index.html"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li>
                     <li>
@@ -70,84 +81,69 @@
                 </div>
                 <!-- /.row -->
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input type="text" value="<?= strtoupper($emotionName) ?>" class="form-control" style="text-transform: uppercase;margin-bottom: 10px;" id="newValue" />
-                                <input type="button" value="Update Name"/ class="btn btn-warning btn-xs" onClick="updateEmotionName(<?= $emotionId ?>);" style="margin-top:20px;margin-bottom: 10px">
-                                <p id="alert"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <table class="table table-hover table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th>Attributes</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                            $selectedAttributes = $db->getAttributes($emotionId);
-                                            foreach($selectedAttributes as $attribute){?>
-                                        <tr id="attribute-<?= $attribute['attribute_id']; ?>">
-                                            <td><?= $attribute['attribute_name'] ?></td>
-                                            <td><a href="javascript:void(0)" onClick="return deleteEmotionAttribute(<?= $emotionId ?>,<?= $attribute['attribute_id'] ?>, '<?= strtoupper($attribute['attribute_name']); ?>')">Remove <span class="fa fa-remove"></span></a></td>
-                                        </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                                <input type="button" value="Select New" data-toggle="modal" onClick="showSelected(); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
-                                <!-- Modal -->
-                                <div id="myModal" class="modal fade" role="dialog">
-                                    <div class="modal-dialog">
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Select Attributes</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form method="POST" action="database/addNewAttributes.php">
-                                                  <div class="form-group">
-                                                    <select class="form-control" multiple id="oldSelect" name="newAddSelect[]">
-                                                    <?php
-                                                        $attributes = $db->getAllAttributes();
-                                                        foreach ($attributes as $attribute) {
-                                                    ?>
-                                                        <option style="display:block" id="selectAttribute<?= $attribute['attribute_id'] ?>" value="<?= $attribute['attribute_id']; ?>"><?= $attribute['attribute_name']; ?></option>
-                                                        ?>
-                                                    <?php
-                                                        }
-                                                    ?>
-                                                    </select>
-                                                    <select class="form-control" multiple id="newSelect" name="newAddSelect[]" style='display: none'>
-                                                    
-                                                    </select>
-                                                    <input type="hidden" name="emotionId" value="<?= $emotionId ?>">
-                                                    <input type="hidden" id="toChange" name="emotionName" value="<?= $emotionName ?>">
-                                                  </div>
-                                                  <button type="submit"  class="btn btn-success">Add</button>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
+                    <div class="col-md-4">
+                        <input type="text" value="<?= strtoupper($emotionName) ?>" class="form-control" style="text-transform: uppercase;margin-bottom: 10px;" id="newValue" />
+                        <input type="button" value="Update Name"/ class="btn btn-warning btn-xs" onClick="updateEmotionName(<?= $emotionId ?>);" style="margin-top:20px;margin-bottom: 10px">
+                        <p id="alert"></p>
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Attributes</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $selectedAttributes = $db->getAttributes($emotionId);
+                                    foreach($selectedAttributes as $attribute){?>
+                                <tr id="attribute-<?= $attribute['attribute_id']; ?>">
+                                    <td><?= $attribute['attribute_name'] ?></td>
+                                    <td><a href="javascript:void(0)" onClick="return deleteEmotionAttribute(<?= $emotionId ?>,<?= $attribute['attribute_id'] ?>, '<?= strtoupper($attribute['attribute_name']); ?>')">Remove <span class="fa fa-remove"></span></a></td>
+                                </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        <input type="button" value="Select New" data-toggle="modal" onClick="showSelected(); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
+                        <!-- Modal -->
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Select Attributes</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="database/addNewAttributes.php">
+                                          <div class="form-group">
+                                            <select class="form-control" multiple id="oldSelect" name="newAddSelect[]">
+                                            <?php
+                                                $attributes = $db->getAllAttributes();
+                                                foreach ($attributes as $attribute) {
+                                            ?>
+                                                <option style="display:block" id="selectAttribute<?= $attribute['attribute_id'] ?>" value="<?= $attribute['attribute_id']; ?>"><?= $attribute['attribute_name']; ?></option>
+                                                ?>
+                                            <?php
+                                                }
+                                            ?>
+                                            </select>
+                                            <select class="form-control" multiple id="newSelect" name="newAddSelect[]" style='display: none'>
+                                            
+                                            </select>
+                                            <input type="hidden" name="emotionId" value="<?= $emotionId ?>">
+                                            <input type="hidden" id="toChange" name="emotionName" value="<?= $emotionName ?>">
+                                          </div>
+                                          <button type="submit"  class="btn btn-success">Add</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <?php
-                            $foods = $db->emotionFood($emotionId); 
-                            foreach($foods as $food){
-                        ?>
-                        <div class="col-md-6 foodAttribute-<?= $food['attribute_id'] ?>">
-                            <img src="database/display-image.php?foodId=<?= $food['food_id']?>" class="img-responsive" style="border-radius: 10px" />
-                            <h5><?= strtoupper($food['food_name']) ?></h5>
-                        </div>
-                        <?php } ?>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -224,7 +220,6 @@
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200){  
                             $('#attribute-'+id).hide('3000');
-                            $('.foodAttribute-'+id).hide('3000');
                             document.getElementById('oldSelect').style.display = 'none';
                             document.getElementById('newSelect').style.display = 'block';
                             document.getElementById("newSelect").innerHTML = this.responseText;

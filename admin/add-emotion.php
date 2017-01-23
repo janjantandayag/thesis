@@ -34,6 +34,17 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#attribute"><i class="fa fa-fw fa-list-alt"></i> Manage Attribute <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="attribute" class="collapse">
+                            <li>
+                                <a href="attribute-list.php">Attribute List</a>
+                            </li>
+                            <li>
+                                <a href="attribute-add.php">Add Attribute</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="index.html"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li>
                     <li>
