@@ -107,7 +107,7 @@
                                     </td>
                                     <td>
                                         <a href="#" onClick="return deleteAttribute(<?= $attribute['attribute_id'] ?>, '<?= strtoupper($attribute['attribute_name']) ?>' )"><span class="fa fa-trash"></span> Delete</a> |
-                                        <a href="emotion-update.php?attributeId=<?= $attribute['attribute_id']; ?>&attributeName=<?=$attribute['attribute_name'] ?>"><span class="fa fa-pencil-square"></span> Update</a>
+                                        <a href="attribute-update.php?attributeId=<?= $attribute['attribute_id']; ?>&attributeName=<?=$attribute['attribute_name'] ?>"><span class="fa fa-pencil-square"></span> Update</a>
                                     </td>
                                 </tr>
                                 <?php
