@@ -149,6 +149,49 @@
 	 		$result = $stmt->fetchAll();
 	 		return $result;
     	}
+
+    	public function addFood($img, $attributes,$description,$foodName){
+			//CHECK IF EXISTING
+			$stmt = $this->conn->prepare("SELECT * FROM food WHERE food.food_name LIKE '%$foodName%'"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		//EXIST
+	 		if(count($result) > 0){
+	 			echo "<script>
+	 				alert('already in the db');
+	 			</script>";
+	 		}
+	 		//NOT EXIST
+	 		else{
+	 		//INSERT TO EMOTION
+	 			$imagetmp = addslashes(file_get_contents($img));
+
+				$insertStmt = $this->conn->prepare("INSERT INTO food(food_name,food_img,food_description) VALUE('$foodName','$imagetmp','$description')"); 
+				$insertStmt->execute();
+				//QUERY LAST ROW
+				$lastRowStmt = $this->conn->prepare("SELECT food_id FROM food ORDER BY food_id DESC LIMIT 1");
+				$lastRowStmt->execute();
+				$result = $lastRowStmt->fetch();
+				$lastId = $result['food_id'];
+				//INSERT TO EMOOTION_FOODATTRIBUTE
+				foreach ($attributes as $attribute) {
+					$insertFoodAttrStmt = $this->conn->prepare("INSERT INTO attribute_food(attribute_id,food_id) VALUE($attribute, $lastId)");
+					$insertFoodAttrStmt->execute();
+				}
+				echo "<script>
+ 						alert('Successfully added!');
+ 						window.location = 'food-list.php';
+ 					  </script>";
+	 		} 
+		}
+
+		public function getFoodAttributes($id){
+    		$stmt = $this->conn->prepare("SELECT * FROM attribute,attribute_food, food WHERE food.food_id = $id AND attribute_food.food_id= food.food_id AND attribute_food.attribute_id = attribute.attribute_id"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
+    	}
+
 	}
 
 
