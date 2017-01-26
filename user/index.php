@@ -11,7 +11,7 @@
 		<div class="container">
 			<div class="row">
 				<h1>Hi, how are you today?</h1>
-				<p>Enter what you feel and we will help you find nearest place to eat.</p>
+				<p>Enter what you feel and we will help you what food to eat.</p>
 			</div>
 			<form action="result.php" method="GET">
 				<div class="row">
