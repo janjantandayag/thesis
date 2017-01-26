@@ -10,7 +10,6 @@ if($_POST){
 	}
 	echo "<script>
 			alert('Successfully added!');
+			window.location = '../emotion-update.php?emotionId=$emotionId&emotionName=$emotionName';
 		  </script>";
-	header("location: ../emotion-update.php?emotionId=$emotionId&emotionName=$emotionName");
-
 }

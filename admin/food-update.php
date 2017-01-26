@@ -123,8 +123,9 @@
                                 </tr>
                                 <?php } ?>
                             </tbody>
-                        </table>
-                        <input type="button" value="Select New"  data-dismiss="modal" data-backdrop="false" data-toggle="modal" onClick="showSelected(); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
+                        </table>  
+                        <p id="alert-deleted"></p>
+                        <input type="button" value="Select New"  data-dismiss="modal"  data-toggle="modal" onClick="showSelected(); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
                     </div>
                 </div>
                 <!-- /.row -->
@@ -178,11 +179,7 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script>
-        function showSelected(){
-
-            $('.modal-backdrop').css({
-                 'z-index': '-1'
-             });
+        function showSelected(){ 
             var ids= [<?php 
                 $i = 1;
                 foreach($selectedAttributes as $attribute){
@@ -223,10 +220,10 @@
                                 "color":"green",
                                 "font-weight":"bold"
                             });
-                            prompt.fadeIn(2000);
-                            prompt.fadeOut(5000);
+                            prompt.fadeIn(500);
+                            prompt.fadeOut(1500);
                             document.getElementById('toChange').value = newValue;
-                            window.history.pushState({}, 'Food Update', '../admin/food-update.php?foodId=<?=$foodId?>&foodName='+newValue.toLowerCase())
+                            window.history.pushState({}, 'Food Update', '../admin/food-update.php?foodId=<?=$foodId?>&foodName='+newValue.toLowerCase());
                                 }
                             };
                     xmlhttp.open("GET", "database/updateFoodName.php?id=" + id+"&name="+ newValue, true);
@@ -259,8 +256,8 @@
                                 "color":"green",
                                 "font-weight":"bold"
                             });
-                            prompt.fadeIn(2000);
-                            prompt.fadeOut(5000);
+                            prompt.fadeIn(500);
+                            prompt.fadeOut(1500);
                                 }
                             };
                     xmlhttp.open("GET", "database/updateFoodDescription.php?id=" + id+"&description="+ newValue, true);
@@ -272,11 +269,19 @@
             }            
         }
         function deleteFoodAttribute(foodId,attributeId, name){
+            var prompt = $("#alert-deleted");
             if(confirm('Are you sure you want to remove '+name+'?')){
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200){  
                             $('#attribute-'+attributeId).hide('3000');
+                            prompt.text('Successfully deleted!');
+                            prompt.css({
+                                "color":"green",
+                                "font-weight":"bold"
+                            });
+                            prompt.fadeIn(500);
+                            prompt.fadeOut(1500);
                             document.getElementById('oldSelect').style.display = 'none';
                             document.getElementById('newSelect').style.display = 'block';
                             document.getElementById("newSelect").innerHTML = this.responseText;

@@ -13,7 +13,7 @@
 <body>
     <div id="wrapper">
         <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <?php include('include/top-nav.php') ?>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -21,7 +21,7 @@
                     <li>
                         <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <li  class="active">
+                    <li class="active">
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-smile-o"></i> Manage Emotion <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
@@ -40,6 +40,17 @@
                             </li>
                             <li>
                                 <a href="attribute-add.php">Add Attribute</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#food"><i class="fa fa-fw fa-cutlery"></i> Manage Food <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="food" class="collapse">
+                            <li>
+                                <a href="food-list.php">Food List</a>
+                            </li>
+                            <li>
+                                <a href="food-add.php">Add Food</a>
                             </li>
                         </ul>
                     </li>
@@ -75,7 +86,7 @@
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-hover table-responsive">
+                        <table class="table table-hover table-responsive table-striped">
                             <thead>
                                 <tr>
                                     <th>Emotion Name</th>

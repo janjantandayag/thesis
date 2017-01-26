@@ -10,7 +10,7 @@ if($_POST){
 	}
 	echo "<script>
 			alert('Successfully added!');
+			window.location = '../food-update.php?foodId=$foodId&foodName=$foodName';
 		  </script>";
-	header("location: ../food-update.php?foodId=$foodId&foodName=$foodName");
 
 }

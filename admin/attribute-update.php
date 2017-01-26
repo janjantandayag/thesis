@@ -36,7 +36,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li  class="active">
+                    <li class="active">
                         <a href="javascript:;" data-toggle="collapse" data-target="#attribute"><i class="fa fa-fw fa-list-alt"></i> Manage Attribute <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="attribute" class="collapse">
                             <li>
@@ -44,6 +44,17 @@
                             </li>
                             <li>
                                 <a href="attribute-add.php">Add Attribute</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#food"><i class="fa fa-fw fa-cutlery"></i> Manage Food <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="food" class="collapse">
+                            <li>
+                                <a href="food-list.php">Food List</a>
+                            </li>
+                            <li>
+                                <a href="food-add.php">Add Food</a>
                             </li>
                         </ul>
                     </li>
@@ -73,8 +84,8 @@
                             <li>
                                 <a href="attribute-list.php"><i class="fa fa-list"></i> Attribute List</a>
                             </li>
-                            <li class="active" id="li-value">
-                                Update: <?= strtoupper($attributeName)  ?>
+                            <li class="active">
+                                Update: <span  id="li-value"><?= strtoupper($attributeName)  ?></span>
                             </li>
                         </ol>
                     </div>
@@ -104,7 +115,8 @@
                                 </tr>
                                 <?php } ?>
                             </tbody>
-                        </table>
+                        </table>                        
+                        <p id="alert-deleted"></p>
                         <input type="button" value="Select New" data-toggle="modal" onClick="showSelected(); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
                         <!-- Modal -->
                         <div id="myModal" class="modal fade" role="dialog">
@@ -200,9 +212,10 @@
                                 "color":"green",
                                 "font-weight":"bold"
                             });
-                            prompt.fadeIn(2000);
-                            prompt.fadeOut(5000);  
+                            prompt.fadeIn(500);
+                            prompt.fadeOut(1500);  
                             document.getElementById('toChange').value = newValue;
+                            window.history.pushState({}, 'Attributes Update', '../admin/attribute-update.php?attributeId=<?=$attributeId?>&attributeName='+newValue.toLowerCase());
                                 }
                             };
                     xmlhttp.open("GET", "database/updateAttribute.php?id=" + id+"&name="+ newValue, true);
@@ -215,10 +228,18 @@
         }
 
         function deleteAttributeFood(attributeId,foodId, foodName){
+            var prompt = $("#alert-deleted");
             if(confirm('Are you sure you want to remove '+foodName+'?')){
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200){  
+                            prompt.text('Successfully deleted!');
+                            prompt.css({
+                                "color":"green",
+                                "font-weight":"bold"
+                            });
+                            prompt.fadeIn(500);
+                            prompt.fadeOut(1500); 
                             $('#attribute-'+foodId).hide('3000');
                             $('.foodAttribute-'+foodId).hide('3000');
                             document.getElementById('oldSelect').style.display = 'none';

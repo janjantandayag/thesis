@@ -25,7 +25,7 @@
                     <li>
                         <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <li  class="active">
+                    <li class="active">
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-smile-o"></i> Manage Emotion <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
@@ -44,6 +44,17 @@
                             </li>
                             <li>
                                 <a href="attribute-add.php">Add Attribute</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#food"><i class="fa fa-fw fa-cutlery"></i> Manage Food <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="food" class="collapse">
+                            <li>
+                                <a href="food-list.php">Food List</a>
+                            </li>
+                            <li>
+                                <a href="food-add.php">Add Food</a>
                             </li>
                         </ul>
                     </li>
@@ -73,8 +84,8 @@
                             <li>
                                 <a href="emotion-list.php"><i class="fa fa-list"></i> Emotion List</a>
                             </li>
-                            <li class="active" id="li-value">
-                                Update: <?= strtoupper($emotionName)  ?>
+                            <li class="active">
+                                Update: <span  id="li-value"><?= strtoupper($emotionName)  ?></span>
                             </li>
                         </ol>
                     </div>
@@ -104,7 +115,8 @@
                                 </tr>
                                 <?php } ?>
                             </tbody>
-                        </table>
+                        </table>                        
+                        <p id="alert-deleted"></p>
                         <input type="button" value="Select New" data-toggle="modal" onClick="showSelected(); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
                         <!-- Modal -->
                         <div id="myModal" class="modal fade" role="dialog">
@@ -200,9 +212,10 @@
                                 "color":"green",
                                 "font-weight":"bold"
                             });
-                            prompt.fadeIn('slow');
-                            prompt.fadeOut('slow');
+                            prompt.fadeIn(500);
+                            prompt.fadeOut(1500);
                             document.getElementById('toChange').value = newValue;
+                            window.history.pushState({}, 'Emotions Update', '../admin/emotion-update.php?emotionId=<?=$emotionId?>&emotionName='+newValue.toLowerCase());
                                 }
                             };
                     xmlhttp.open("GET", "database/updateName.php?id=" + id+"&name="+ newValue, true);
@@ -217,9 +230,17 @@
         function deleteEmotionAttribute(emotionId,id, name){
             if(confirm('Are you sure you want to remove '+name+'?')){
                 var xmlhttp = new XMLHttpRequest();
+                var prompt = $("#alert-deleted");
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200){  
                             $('#attribute-'+id).hide('3000');
+                            prompt.text('Successfully deleted!');
+                            prompt.css({
+                                "color":"green",
+                                "font-weight":"bold"
+                            });
+                            prompt.fadeIn(500);
+                            prompt.fadeOut(1500);
                             document.getElementById('oldSelect').style.display = 'none';
                             document.getElementById('newSelect').style.display = 'block';
                             document.getElementById("newSelect").innerHTML = this.responseText;

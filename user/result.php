@@ -38,7 +38,7 @@
 								<p class="food-description">
 									<?= $row['food_description'];?>
 								</p>
-								 <a href="details.php?emotionName=<?= $emotionName ?>&id=<?=$row['food_id']?>" class="food-button">Show more details</a>
+								 <!-- <a href="details.php?emotionName=<?= $emotionName ?>&id=<?=$row['food_id']?>" class="food-button">Show more details</a> -->
 							 </div>
 						</div>
 					</div>
