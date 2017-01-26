@@ -123,7 +123,7 @@
                                     </td>
                                     <td>
                                         <a href="javascript:void(0)" onClick="return deleteFood(<?= $food['food_id'] ?>, '<?= strtoupper($food['food_name']) ?>')"><span class="fa fa-trash"></span> Delete</a> |
-                                        <a href="attribute-update.php?attributeId=<?= $attribute['attribute_id']; ?>&attributeName=<?=$attribute['attribute_name'] ?>"><span class="fa fa-pencil-square"></span> Update</a>
+                                        <a href="food-update.php?foodId=<?= $food['food_id']; ?>&foodName=<?=$food['food_name'] ?>"><span class="fa fa-pencil-square"></span> Update</a>
                                     </td>
                                 </tr>
                                 <?php

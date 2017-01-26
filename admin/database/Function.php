@@ -192,6 +192,13 @@
 	 		return $result;
     	}
 
+    	public function getSpecificFood($id){
+    		$stmt = $this->conn->prepare("SELECT * FROM food WHERE food.food_id = $id"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
+    	}
+
 	}
 
 
