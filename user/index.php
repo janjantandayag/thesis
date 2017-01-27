@@ -1,3 +1,9 @@
+<?php
+	include('database/DatabaseFunction.php');
+	$db = new DatabaseFunction;
+	$emotions = $db->displayEmotions();
+	$count = $db->getNumEmotion();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +17,18 @@
 		<div class="container">
 			<div class="row">
 				<h1>Hi, how are you today?</h1>
-				<p>Enter what you feel and we will help you what food to eat.</p>
+				<p>Select or search what you feel and we will help you what food to eat.</p>
+			</div>
+			<div class="row emotion-stats">
+				<div class="col-md-5">
+					<h1 class="emotion-num"><?= $count ?></h1>
+					<h3 class="emotion-label">EMOTIONS</h3>
+				</div>
+				<div class="col-md-7 emotions">
+					<?php foreach($emotions as $emotion){ ?>
+					<a href="javascript:void(0)" onClick="redirectTo('<?=$emotion['emotion_name'] ?>')"class="emotion-indiv"><?= $emotion['emotion_name'] ?></a>
+					<?php } ?>
+				</div>
 			</div>
 			<form action="result.php" method="GET">
 				<div class="row">
@@ -30,8 +47,25 @@
 		</div>
 	</section>
 
-	<script>
+<script>
+    // COUNTER
+	$('.emotion-num').each(function () {
+	    $(this).prop('Counter',0).animate({
+	        Counter: $(this).text()
+	    }, {
+	        duration: 1500,
+	        easing: 'swing',
+	        step: function (now) {
+	            $(this).text(Math.ceil(now));
+	        }
+	    });
+	});
 
-	</script>
+	//ONCLICK 
+	function redirectTo(emotionName){
+		window.location.href="result.php?emotion="+emotionName+'&page=1';
+	}
+
+</script>
 </body>
 </html>
