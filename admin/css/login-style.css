@@ -109,8 +109,10 @@ input, select {
 
 /*style*/
 body{
-	background: #f0770b;
+	background: url(../img/banner.jpg) no-repeat center center fixed;
+    background-size: cover;
 }
+
 .wrapper{
 	max-width: 100%;
 	width: 500px;
@@ -119,10 +121,9 @@ body{
 }
 .wrapper  form{
 	padding: 50px;
-	border: 1px solid #df6d19;
 	text-align: center;
 	border-radius: 5px;
-	background:#fff;
+	background:rgba(255,255,255,.2);
 }
 .wrapper input[type='text'],
 .wrapper input[type='password']{
@@ -138,10 +139,12 @@ body{
 	font-family: hindLight;
 	padding-left: 20px;
 }
-.header-container{
-	width: 100%;
-	margin: 0 auto;
+.wrapper input[type='text']:focus,
+.wrapper input[type='password']:focus,
+.wrapper input[type='submit']:focus{
+    outline:none;
 }
+
 .wrapper input[type='submit']{
 	border: none;
 	background: #df6d19;
@@ -156,4 +159,14 @@ body{
 }
 .wrapper input[type='submit']:hover{
 	cursor: pointer;
+}
+.messages{
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.messages p{
+    color:#e60b0b;
+    font-family: montserrat;
 }

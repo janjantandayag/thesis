@@ -51,11 +51,11 @@
 		    	<div class="pagination">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="result.php?emotion=<?= $emotionName ?>&page=<?=$page-1?>" class="previous" style="<?php if($page<=1){ echo 'pointer-events: none;cursor:default;border-color: #e0e6e0;color: #e0e6e0';}?>"><span class="fa fa-arrow-left"></span></a>
+                            <a href="result.php?emotion=<?= $emotionName ?>&page=<?=$page-1?>" class="previous" style="<?php if($page<=1){ echo 'pointer-events: none;cursor:default;border-color:#a1a7a1;color: #a1a7a1';}?>"><span class="fa fa-arrow-left"></span></a>
                         	<?php for($i=1;$i<=$totalPages;$i++){ ?>
                             <a href="result.php?emotion=<?= $emotionName ?>&page=<?=$i?>" class="<?php if($i==$page){echo 'active-page'; } ?>"><?=$i?></a>
                             <?php } ?>                            
-                            <a href="result.php?emotion=<?= $emotionName ?>&page=<?=$page+1?>" class="next" style="<?php if($page>=$totalPages){ echo 'pointer-events: none;cursor:default;border-color: #e0e6e0;color: #e0e6e0';}?>" ><span class="fa fa-arrow-right"></span></a>
+                            <a href="result.php?emotion=<?= $emotionName ?>&page=<?=$page+1?>" class="next" style="<?php if($page>=$totalPages){ echo 'pointer-events: none;cursor:default;border-color: #a1a7a1;color: #a1a7a1';}?>" ><span class="fa fa-arrow-right"></span></a>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,6 @@
         <div class="not-found">
         	<p>Sorry! No result found for <span class="emotion-name"><?= $emotionName ?></span></p>
         </div>
-
         <?php } ?>
 	</section>
 </body>

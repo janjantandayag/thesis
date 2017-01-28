@@ -1,5 +1,5 @@
 <?php	
-	
+	session_start();
 	Class DatabaseFunction{
 		public $servername = 'localhost';
 		public $dbname = 'thesisprototype';
@@ -198,6 +198,62 @@
 	 		$result = $stmt->fetchAll();
 	 		return $result;
     	}
+
+    	public function isExist($username, $password){
+    		$stmt = $this->conn->prepare("SELECT * FROM users WHERE users.username = '$username' AND users.password=md5('$password')"); 
+	 		$stmt->execute();
+	 		$exist = $stmt->rowCount();
+	 		return $exist;
+    	}
+
+    	public function login($username, $password){
+    		$stmt = $this->conn->prepare("SELECT * FROM users WHERE users.username = '$username' AND users.password=md5('$password')"); 
+	 		$stmt->execute();
+	 		$exist = $stmt->rowCount();
+ 			$result = $stmt->fetch(); 			
+ 			$_SESSION['loggedIn'] =  true;
+ 			$_SESSION['userId'] = $result['user_id'];
+ 			$_SESSION['firstName'] = $result['first_name'];
+ 			$_SESSION['lastName'] = $result['last_name'];
+ 			header("location: ./dashboard.php");
+    	}
+
+    	public function isLogin(){
+    		if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true ){
+    		}
+    		else{
+    			echo "
+    				<script>
+    					alert('Unauthorized access! Please login to continue!');
+    					window.location = './index.php';
+    				</script>
+    			";
+    		}
+    	}
+
+    	public function getAdminDetails(){
+    		$userId = $_SESSION['userId'];
+    		$stmt = $this->conn->prepare("SELECT * FROM users WHERE users.user_id = $userId"); 
+	 		$stmt->execute();
+	 		$exist = $stmt->rowCount();
+ 			$result = $stmt->fetch();
+ 			return $result;
+    	}
+
+    	public function updatePassUser($username, $password){
+    		$userId = $_SESSION['userId'];
+    		$stmt = $this->conn->prepare("UPDATE users SET users.username = '$username', password=md5('$password') WHERE users.user_id = $userId"); 
+	 		$stmt->execute();
+	 		$_SESSION['loggedIn'] = false;
+	 		session_unset($_SESSION['loggedIn'], $_SESSION['userId'], $_SESSION['firstName'], $_SESSION['lastName']); 
+			session_destroy(); 
+	 		echo "<script>
+					alert('Password/Username updated!');
+					alert('Please login to continue!');
+					window.location = 'index.php';
+				  </script>";
+    	}
+
 
 	}
 
