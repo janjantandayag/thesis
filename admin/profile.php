@@ -1,8 +1,7 @@
 <?php 
     include('include/head.php');
     $userDetails = $db->getAdminDetails();
-?>
-    
+?>   
         <div id="page-wrapper">
             <div class="container-fluid">
                 <!-- Page Heading -->

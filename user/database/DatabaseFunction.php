@@ -26,6 +26,25 @@
 	 		return $result;
     	}
 
+        public function getFoodDetails($id){
+            $stmt = $this->conn->prepare("SELECT * from food, food_location, location WHERE food.food_id = $id AND food.food_id = food_location.food_id AND food_location.location_id = location.location_id"); 
+            $stmt->execute(); 
+            $result = $stmt->fetch();
+            return $result;
+        }
+        public function getFoodLocation($id){
+            $stmt = $this->conn->prepare("SELECT * from food, food_location, location WHERE food.food_id = $id AND food.food_id = food_location.food_id AND food_location.location_id = location.location_id"); 
+            $stmt->execute(); 
+            $result = $stmt->fetchAll();
+            return $result;
+        }
+
+        public function getNumLocation($id){
+            $stmt = $this->conn->prepare("SELECT * from food, food_location, location WHERE food.food_id = $id AND food.food_id = food_location.food_id AND food_location.location_id = location.location_id"); 
+            $stmt->execute();
+            $count = $stmt->rowCount();
+            return $count;
+        }
     	public function getNumEmotion(){
     		$stmt = $this->conn->prepare("SELECT * FROM emotion"); 
     		$stmt->execute();

@@ -33,10 +33,21 @@
                 <a href="javascript:;" data-toggle="collapse" data-target="#food"><i class="fa fa-fw fa-cutlery"></i> Manage Food <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="food" class="collapse">
                     <li>
-                        <a href="food-list.php">Attribute List</a>
+                        <a href="food-list.php">Food List</a>
                     </li>
                     <li>
-                        <a href="food-add.php">Add Attribute</a>
+                        <a href="food-add.php">Add Food</a>
+                    </li>
+                </ul>
+            </li>
+            <li <?php echo ($currentPage == 'location-add.php') || ($currentPage == 'location-list.php') || ($currentPage == 'location-update.php') ? 'class="active"' : ''; ?>>
+                <a href="javascript:;" data-toggle="collapse" data-target="#location"><i class="fa fa-fw fa-map-marker"></i> Manage Location <i class="fa fa-fw fa-caret-down"></i></a>
+                <ul id="location" class="collapse">
+                    <li>
+                        <a href="location-list.php">Location List</a>
+                    </li>
+                    <li>
+                        <a href="location-add.php">Add Location</a>
                     </li>
                 </ul>
             </li>

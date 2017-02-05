@@ -150,7 +150,7 @@
 	 		return $result;
     	}
 
-    	public function addFood($img, $attributes,$description,$foodName){
+    	public function addFood($img, $attributes,$locations,$description,$foodName){
 			//CHECK IF EXISTING
 			$stmt = $this->conn->prepare("SELECT * FROM food WHERE food.food_name LIKE '%$foodName%'"); 
 	 		$stmt->execute(); 
@@ -177,6 +177,10 @@
 				foreach ($attributes as $attribute) {
 					$insertFoodAttrStmt = $this->conn->prepare("INSERT INTO attribute_food(attribute_id,food_id) VALUE($attribute, $lastId)");
 					$insertFoodAttrStmt->execute();
+				}
+				foreach ($locations as $location) {
+					$insertFoodLocationStmt = $this->conn->prepare("INSERT INTO food_location(food_id,location_id) VALUE($lastId, $location)");
+					$insertFoodLocationStmt->execute();
 				}
 				echo "<script>
  						alert('Successfully added!');
@@ -254,7 +258,48 @@
 				  </script>";
     	}
 
+    	public function getAllLocations(){
+			$stmt = $this->conn->prepare("SELECT * FROM location"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
+		}
+		public function getSpecificLocation($id){
+			$stmt = $this->conn->prepare("SELECT * FROM location WHERE location.location_id = $id"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetch();
+	 		return $result;
+		}
+		public function getLocationDetails($id){
+			$stmt = $this->conn->prepare("SELECT * FROM location,food,food_location WHERE food.food_id=$id AND food.food_id = food_location.food_id AND food_location.location_id = location.location_id"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		return $result;
+		}
+		public function addLocation($img, $lat,$locationName,$lang,$address){
+			//CHECK IF EXISTING
+			$stmt = $this->conn->prepare("SELECT * FROM location WHERE location.location_name LIKE '%$locationName%'"); 
+	 		$stmt->execute(); 
+	 		$result = $stmt->fetchAll();
+	 		//EXIST
+	 		if(count($result) > 0){
+	 			echo "<script>
+	 				alert('already in the db');
+	 			</script>";
+	 		}
+	 		//NOT EXIST
+	 		else{
+	 		//INSERT TO EMOTION
+	 			$imagetmp = addslashes(file_get_contents($img));
 
+				$insertStmt = $this->conn->prepare("INSERT INTO location(location_name,location_img,lat,lang,address) VALUE('$locationName','$imagetmp','$lat', '$lang','$address')"); 
+				$insertStmt->execute();
+				echo "<script>
+							alert('Successfully added!');
+							window.location = 'location-list.php';
+						  </script>";
+	 		} 
+		}
 	}
 
 

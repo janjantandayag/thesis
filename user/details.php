@@ -1,6 +1,9 @@
 <?php
-	include('connection.php');
+	include('database/DatabaseFunction.php');
+	$db = new DatabaseFunction;
 	$foodId = $_GET['id'];
+	$emotionName = $_GET['emotionName'];
+	$food = $db->getFoodDetails($foodId);
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,20 +14,17 @@
 	<title>Home</title>
 </head>
 <body>
-	<?php include ('page-header.php') ?>
+	<?php  include ('page-header.php')  ?>
+	<?php if($food) : ?>
 	<section id="food-detail">
 		<div class="container">
-			<?php
-				$query = mysqli_query($conn, "SELECT * from food, food_location, location WHERE food.food_id = $foodId AND food.food_id = food_location.food_id AND food_location.location_id = location.location_id");
-				$row = mysqli_fetch_assoc($query);
-			?>
 			<div class="row">
 				<div class="col-md-4">
-					<img src="display-image.php?imgId=<?= $row['food_id'] ?>" width="100%" />
+					<img src="display-image.php?imgId=<?= $food['food_id'] ?>" width="100%" />
 				</div>
 				<div class="col-md-8">
-					<h1 class="detail--foodname"><?= $row['food_name']?></h1>
-					<p class="detail--fooddesc"><?= $row['food_description']?>
+					<h1 class="detail--foodname"><?= $food['food_name']?></h1>
+					<p class="detail--fooddesc"><?= $food['food_description']?>
 					</p>
 				</div>
 			</div>
@@ -40,18 +40,13 @@
 		</div>
 		<div class="location-available">
 			<div class="container">
-				<?php
-					$queryLocation = mysqli_query($conn, "SELECT * from food, food_location, location WHERE food.food_id = $foodId AND food.food_id = food_location.food_id AND food_location.location_id = location.location_id");
-					$numOfLocation = mysqli_num_rows($queryLocation);
-				?>
 				<div class="row">
 					<div class="col-md-12">
-						<p class="location-num"><span class="num"><?= $numOfLocation ?></span> locations found<p>
+						<p class="location-num"><span class="num"><?= $db->getNumLocation($foodId); ?></span> locations found<p>
 					</div>
 				</div>
 				<div class="row">
-				<?php 
-					while($location = mysqli_fetch_assoc($queryLocation)){ ?>
+					<?php foreach($db->getFoodLocation($foodId) as $location): ?>
                     <div class="col-md-6 location-border">
 						<div class="col-md-6">
 							<img src="display-location.php?imgId=<?= $location['location_id'] ?>" width="100%" />
@@ -74,7 +69,7 @@
 								<div class="col-sm-2 no-padding">
 									<span class="fa fa-mobile"></span>
 								</div>
-								<div class="col-sm-10">			<p class="location-desc" ><?= $location['phone_number'] ?></p>
+								<div class="col-sm-10"><p class="location-desc" ><?= $location['phone_number'] ?></p>
 								</div>
 							</div>
 							<div class="row location-desc-container">
@@ -87,15 +82,19 @@
 							</div>
 							<div class="row">
 								<a href="#" data-toggle="modal" data-target="#myModal" onclick="displayMap(<?= $location['lat'] ?>, <?= $location['lang'] ?> )" class="button--showmap">Show Map</a>
-
 							</div>
 						</div>	
 					</div>
-					<?php } ?>
+					<?php endforeach; ?>
                 </div>
 			</div>
 		</div>
 	</section>
+	<?php else : ?>
+	<div class="not-found">
+    	<p>Sorry! We are still working</p>
+    </div>
+	<?php endif; ?>
 	<!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">

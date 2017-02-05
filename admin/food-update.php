@@ -38,7 +38,7 @@
                         <input type="button" value="Update Description"/ class="btn btn-danger btn-xs" onClick="updateFoodDescription(<?= $foodId ?>);" style="margin-top:20px;margin-bottom: 10px">
                         <p id="alert-description"></p>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                         <table class="table table-hover table-responsive">
                             <thead>
                                 <tr>
@@ -59,6 +59,28 @@
                         </table>  
                         <p id="alert-deleted"></p>
                         <input type="button" value="Select New"  data-dismiss="modal"  data-toggle="modal" onClick="showSelected(); " data-target="#myModal"/ class="btn btn-success btn-xs"   />
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Locations</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $selectedLocations = $db->getLocationDetails($foodId);
+                                    foreach($selectedLocations as $location) : ;?>
+                                <tr id="location-<?= $location['location_id']; ?>">
+                                    <td><?= ucfirst($location['location_name']) ?></td>
+                                    <td><a href="javascript:void(0)" onClick="return deleteFoodLocation(<?= $foodId ?>,<?= $location['location_id'] ?>, '<?= strtoupper($location['location_name']); ?>')">Remove <span class="fa fa-remove"></span></a></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>  
+                        <p id="alert-deleted-location"></p>
+                        <input type="button" value="Select New"  data-dismiss="modal"  data-toggle="modal" onClick="showSelectedLocation(); " data-target="#modalLocation"/ class="btn btn-success btn-xs"   />
                     </div>
                 </div>
                 <!-- /.row -->
@@ -93,6 +115,41 @@
                         ?>
                         </select>
                         <select class="form-control" multiple id="newSelect" name="newAddSelect[]" style='display: none'>
+                        </select>
+                        <input type="hidden" name="foodId" value="<?= $foodId ?>">
+                        <input type="hidden" id="toChange" name="foodName" value="<?= $foodName ?>">
+                      </div>
+                      <button type="submit"  class="btn btn-success">Add</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL LOCATION-->
+    <div id="modalLocation" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Attributes</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="database/addNewFoodLocation.php">
+                      <div class="form-group">
+                        <select class="form-control" multiple id="oldSelectLocation" name="newAddSelect[]">
+                        <?php
+                            $locations = $db->getAllLocations();
+                            foreach ($locations as $location) : ;
+                        ?>
+                            <option style="display:block" id="selectLocation<?= $location['location_id'] ?>" value="<?= $location['location_id']; ?>"><?= $location['location_name']; ?></option>
+                            ?>
+                        <?php endforeach; ?>
+                        </select>
+                        <select class="form-control" multiple id="newSelectLocation" name="newAddSelect[]" style='display: none'>
                         </select>
                         <input type="hidden" name="foodId" value="<?= $foodId ?>">
                         <input type="hidden" id="toChange" name="foodName" value="<?= $foodName ?>">
@@ -227,6 +284,48 @@
                 return false;
             }
         }
+        function showSelectedLocation(){ 
+            var ids= [<?php 
+                $i = 1;
+                foreach($selectedLocations as $location){
+                    //COMMA GENERATOR
+                    $comma = $db->hasComma($i, $locations); 
+                    echo $location['location_id'].$comma;  
+                    $i++;
+                }
+             ?>];
+
+            for(i=0;i<ids.length;i++){
+                document.getElementById('selectLocation'+ids[i]).style.display = 'none';
+            }
+        }
+        function deleteFoodLocation(foodId,locationId, name){
+            var prompt = $("#alert-deleted-location");
+            if(confirm('Are you sure you want to remove '+name+'?')){
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200){  
+                            $('#location-'+locationId).hide('3000');
+                            prompt.text('Successfully deleted!');
+                            prompt.css({
+                                "color":"green",
+                                "font-weight":"bold"
+                            });
+                            prompt.fadeIn(500);
+                            prompt.fadeOut(1500);
+                            document.getElementById('oldSelectLocation').style.display = 'none';
+                            document.getElementById('newSelectLocation').style.display = 'block';
+                            document.getElementById("newSelectLocation").innerHTML = this.responseText;
+                            }
+                        };
+                xmlhttp.open("GET", "database/deleteFoodLocation.php?foodId=" + foodId + '&locationId='+locationId, true);
+                xmlhttp.send();
+            }
+            else{
+                return false;
+            }
+        }
+
     </script>
 </body>
 
