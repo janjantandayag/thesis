@@ -27,7 +27,7 @@
                                 <input class="form-control" placeholder="Enter username" name="username" value="<?= $userDetails['username'] ?>" required>
                             </div>
                             <div class="form-group">
-                                <label>Password</label>
+                                <label>New Password</label>
                                 <input type="password" id="password" class="form-control" placeholder="Enter password" name="password" required >
                             </div>
                             <div class="form-group">

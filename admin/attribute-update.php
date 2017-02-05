@@ -15,6 +15,9 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
+                                <a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a>
+                            </li>
+                            <li>
                                 <a href="attribute-list.php"><i class="fa fa-list"></i> Attribute List</a>
                             </li>
                             <li class="active">

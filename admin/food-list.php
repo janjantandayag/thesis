@@ -10,6 +10,9 @@
                             Food List
                         </h1>
                         <ol class="breadcrumb">
+                            <li>
+                                <a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a>
+                            </li>
                             <li  class="active">
                                 <i class="fa fa-list"></i> Food List
                             </li>

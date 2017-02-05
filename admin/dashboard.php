@@ -1,4 +1,7 @@
-<?php include('include/head.php'); ?>
+<?php 
+    include('include/head.php'); 
+?>
+
 
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -16,9 +19,98 @@
             </div>
         </div>
         <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-smile-o fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"><?= $db->countRow('emotion'); ?></div>
+                                <div>Emotions!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="emotion-list.php">
+                        <div class="panel-footer">
+                            <span class="pull-left">View</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-list-alt fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"><?= $db->countRow('attribute'); ?></div>
+                                <div>Attributes</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="attribute-list.php">
+                        <div class="panel-footer">
+                            <span class="pull-left">View</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-cutlery fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"><?= $db->countRow('food'); ?></div>
+                                <div>Foods</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="food-list.php">
+                        <div class="panel-footer">
+                            <span class="pull-left">View</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-map-marker fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"><?= $db->countRow('location'); ?></div>
+                                <div>Locations!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="location-list.php">
+                        <div class="panel-footer">
+                            <span class="pull-left">View</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
-
 <?php include('include/footer.php'); ?>

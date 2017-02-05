@@ -300,6 +300,13 @@
 						  </script>";
 	 		} 
 		}
+
+		public function countRow($tableName){
+			$stmt = $this->conn->prepare("SELECT * FROM {$tableName}"); 
+	 		$stmt->execute();
+	 		$result = $stmt->rowCount();
+	 		return $result;
+		}
 	}
 
 
