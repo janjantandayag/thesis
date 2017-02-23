@@ -30,7 +30,7 @@
 			<div class="container">
 				<div class="row">
 					<?php foreach($foods as $food){ ?>
-					<div class="col-md-6">
+					<div class="col-md-6 result-indiv">
 						<div class="row">
 							<div class="col-md-6">
 								<img src="display-image.php?imgId=<?= $food['food_id'] ?>" width="100%" />

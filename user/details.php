@@ -23,8 +23,8 @@
 					<img src="display-image.php?imgId=<?= $food['food_id'] ?>" width="100%" />
 				</div>
 				<div class="col-md-8">
-					<h1 class="detail--foodname"><?= $food['food_name']?></h1>
-					<p class="detail--fooddesc"><?= $food['food_description']?>
+					<h1 class="detail--foodname"><?= $food['food_name'] ?></h1>
+					<p class="detail--fooddesc"><?= ucfirst($food['food_description'])?>
 					</p>
 				</div>
 			</div>
@@ -62,10 +62,10 @@
 									<span class="fa fa-map-marker"></span>
 								</div>
 								<div class="col-sm-10">
-									<p class="location-desc"><?= $location['address'] ?></p>
+									<p class="location-desc"><?= ucwords($location['address']) ?></p>
 								</div>
 							</div>
-							<div class="row location-desc-container ">
+							<!-- <div class="row location-desc-container ">
 								<div class="col-sm-2 no-padding">
 									<span class="fa fa-mobile"></span>
 								</div>
@@ -79,9 +79,9 @@
 								<div class="col-sm-10">
 									<p class="location-desc"><?= $location['mobile_number'] ?></p>
 								</div>
-							</div>
+							</div> -->
 							<div class="row">
-								<a href="#" data-toggle="modal" data-target="#myModal" onclick="displayMap(<?= $location['lat'] ?>, <?= $location['lang'] ?> )" class="button--showmap">Show Map</a>
+								<a href="#" data-toggle="modal" data-target="#myModal" onclick="displayMap(<?= $location['lat'] ?>, <?= $location['lang'] ?>,'<?= ucwords($location['location_name']) ?>')" class="button--showmap">Show Map</a>
 							</div>
 						</div>	
 					</div>
@@ -102,7 +102,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">NAME OF RESTAURANT - PLACE</h4>
+                    <h4 class="modal-title"><?= strtoupper($location['location_name']) ?> - <?= ucwords($location['address']) ?></h4>
                 </div>
                 <div class="modal-body">
                     <div id="map-container">
@@ -180,7 +180,7 @@
 
  //  	function doNothing() {}
     
-    function displayMap(latitude, langhitude) {
+    function displayMap(latitude, langhitude, locationName) {
         var latitude;
         var langhitude;
         var point = new google.maps.LatLng(
@@ -190,8 +190,9 @@
 
         var map = new google.maps.Map(document.getElementById('map'), {
           center: point,
-          zoom: 15, 
+          zoom: 17, 
           mapTypeControl: true,
+          mapTypeId: 'satellite',
           mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
             position: google.maps.ControlPosition.TOP_CENTER
@@ -211,7 +212,7 @@
         var marker = new google.maps.Marker({
           map: map,
           position: point,
-          title:"The Map"
+          title: locationName
         });
         
         google.maps.event.addListenerOnce(map, 'idle', function () {
