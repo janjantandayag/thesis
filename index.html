@@ -2,11 +2,22 @@
 <html>
 <head>
 	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 	<form action="server.cgi" method="post" enctype="multipart/form-data">
-	  <input type="file" name="image" accept="image/*" capture="user">
-	  <input type="submit" value="Upload">
+		<input type="file" accept="image/*" capture onchange="loadFile(event)">
+		<img id="output" width="200px">
 	</form>
+		<script>
+	 var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('output');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+	</script>	
 </body>
 </html>
