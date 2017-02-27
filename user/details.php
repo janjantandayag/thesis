@@ -102,7 +102,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><?= strtoupper($location['location_name']) ?> - <?= ucwords($location['address']) ?></h4>
+                    <h4 class="modal-title" id="modal-locationName"></h4>
                 </div>
                 <div class="modal-body">
                     <div id="map-container">
@@ -181,6 +181,7 @@
  //  	function doNothing() {}
     
     function displayMap(latitude, langhitude, locationName) {
+    	document.getElementById('modal-locationName').innerHTML = locationName.toUpperCase();
         var latitude;
         var langhitude;
         var point = new google.maps.LatLng(
