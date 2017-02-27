@@ -6,7 +6,7 @@
 </head>
 <body>
 	<form action="server.cgi" method="post" enctype="multipart/form-data">
-		<input type="file" accept="image/*" capture onchange="loadFile(event)">
+		<input type="file" accept="image/*" capture="camera" onchange="loadFile(event)">
 		<img id="output" width="200px">
 	</form>
 		<script>
